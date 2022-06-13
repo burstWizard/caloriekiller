@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, Layout, Text, Button } from '@ui-kitten/components';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const HomeScreen = ({navigation}) => (
+  <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <Text category='h1'>Home Screen</Text>
+    <Button onPress={()=> navigation.navigate('Test')}>Go to Test Screen</Button>
+  </Layout>
+);
+
+const TestScreen = ({navigation}) => (
+  <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <Text category='h1'>Test Screen</Text>
+    <Button onPress={()=> navigation.navigate('Home')}>Go to Test Screen</Button>
+  </Layout>
+);
+
+
+
+const Stack = createNativeStackNavigator();
+
+export default () => (
+  <NavigationContainer>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Test" component={TestScreen} />
+      </Stack.Navigator>
+    </ApplicationProvider>
+  </NavigationContainer>
+);
